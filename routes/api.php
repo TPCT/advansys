@@ -1,11 +1,6 @@
 <?php
 
 
-use App\Models\Merchant\Merchant;
-use App\Settings\Site;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
