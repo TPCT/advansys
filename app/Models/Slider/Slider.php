@@ -6,14 +6,8 @@ use App\Helpers\ApiResponse;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasSlug;
 use App\Helpers\HasStatus;
-use App\Helpers\HasUploads;
-use App\Filament\Helpers\Translatable;
-use App\Models\Category\Category;
-use App\Models\SubCategory\SubCategory;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Slider\Slider

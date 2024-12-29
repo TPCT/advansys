@@ -2,13 +2,8 @@
 
 namespace App\Models\Faq;
 
-use App\Helpers\HasAuthor;
-use App\Helpers\HasStatus;
-use App\Helpers\WeightedModel;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Faq\FaqLang

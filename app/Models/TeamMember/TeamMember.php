@@ -2,15 +2,11 @@
 
 namespace App\Models\TeamMember;
 
-use App\Filament\Helpers\Translatable;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasStatus;
 use App\Helpers\WeightedModel;
-use App\Models\Award\AwardLang;
 use App\Models\Dropdown\Dropdown;
 use Filament\Tables\Columns\Concerns\HasWeight;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 
 /**
@@ -76,15 +72,4 @@ class TeamMember extends WeightedModel implements \OwenIt\Auditing\Contracts\Aud
     public array $translatedAttributes = [
         'title', 'description'
     ];
-
-    public function dropdown(): \Illuminate\Database\Eloquent\Relations\BelongsTo
-    {
-        return $this->belongsTo(Dropdown::class)
-            ->with('translations')
-            ->where('category', Dropdown::TEAM_MEMBER_CATEGORY);
-    }
-
-    public static function getCategoryList(){
-        return Dropdown::whereCategory(Dropdown::TEAM_MEMBER_CATEGORY)->get()->pluck('title', 'id');
-    }
 }

@@ -3,21 +3,14 @@
 namespace App\Models\News;
 
 use App\Helpers\HasAuthor;
-use App\Helpers\HasLingual;
 use App\Helpers\HasMedia;
-use App\Helpers\HasSearch;
 use App\Helpers\HasSlug;
 use App\Helpers\HasStatus;
 use App\Helpers\HasTimestamps;
-use App\Helpers\HasUploads;
 use App\Helpers\WeightedModel;
-use App\Models\Dropdown\Dropdown;
-use App\Filament\Helpers\Translatable;
 use Awcodes\Curator\Models\Media;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\News\News
@@ -80,7 +73,7 @@ use Spatie\Translatable\HasTranslations;
  */
 class News extends WeightedModel implements \OwenIt\Auditing\Contracts\Auditable, Searchable
 {
-    use \App\Helpers\HasTranslations, HasMedia, HasAuthor, HasStatus, \OwenIt\Auditing\Auditable, \App\Helpers\HasSeo, HasSlug, HasTimestamps, \App\Helpers\Translatable;
+    use \App\Helpers\HasTranslations, HasMedia, HasAuthor, HasStatus, \OwenIt\Auditing\Auditable, HasSlug, HasTimestamps, \App\Helpers\Translatable;
 
     public $translationModel = NewsLang::class;
 

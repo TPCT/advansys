@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Helpers\HasAuthor;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 

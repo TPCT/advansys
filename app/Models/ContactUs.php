@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\HasUploads;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 

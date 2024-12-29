@@ -4,7 +4,6 @@ namespace App\Models\Translation;
 
 use App\Helpers\HasAuthor;
 use App\Helpers\HasTranslations;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 

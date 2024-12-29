@@ -4,9 +4,7 @@ namespace App\Models;
 
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
-use App\Helpers\HasSlug;
 use App\Helpers\HasStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 

@@ -2,12 +2,10 @@
 
 namespace App\Models\Slider;
 
-use App\Filament\Helpers\Translatable;
 use App\Helpers\ApiResponse;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
 use App\Helpers\HasStatus;
-use App\Models\Merchant\Merchant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
@@ -81,9 +79,4 @@ class SliderSlide extends Model implements Auditable
     public array $translatedAttributes = [
         'title', 'slide_url', 'image_id', 'second_title'
     ];
-
-    public function merchant(){
-        return $this->belongsTo(Merchant::class)->where('verified', 1);
-    }
-
 }

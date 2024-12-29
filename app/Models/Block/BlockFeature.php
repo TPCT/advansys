@@ -2,10 +2,8 @@
 
 namespace App\Models\Block;
 
-use App\Filament\Helpers\Translatable;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
-use App\Helpers\HasSection;
 use App\Helpers\HasStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

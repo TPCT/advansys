@@ -4,13 +4,8 @@ namespace App\Models\Block;
 
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
-use App\Helpers\HasSection;
 use App\Helpers\HasStatus;
-use App\Helpers\HasUploads;
-use App\Models\Dropdown\Dropdown;
-use App\Filament\Helpers\Translatable;
 use Awcodes\Curator\Models\Media;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;

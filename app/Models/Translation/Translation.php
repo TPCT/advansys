@@ -2,12 +2,9 @@
 
 namespace App\Models\Translation;
 
-use App\Filament\Helpers\Translatable;
 use App\Helpers\HasAuthor;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\Translation\Translation

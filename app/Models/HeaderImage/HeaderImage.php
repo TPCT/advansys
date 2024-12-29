@@ -5,12 +5,8 @@ namespace App\Models\HeaderImage;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
 use App\Helpers\HasStatus;
-use App\Helpers\HasUploads;
-use App\Filament\Helpers\Translatable;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
-use Spatie\Translatable\HasTranslations;
 
 /**
  * App\Models\HeaderImage\HeaderImage
