@@ -10,16 +10,35 @@ use Dotenv\Validator;
 
 class SlidersController extends Controller
 {
-    public function index(){
-        $sliders = Slider::all();
-        return Responses::success($sliders);
+    private function delete($category, $id){
+        $slider = Slider::whereCategory($category)->with('slides')->first();
+        $slide = $slider->slides()->findOrFail($id);
+        $slide->delete();
+        return Responses::success([], 200, __("site.Slide Deleted Successfully"));
+    }
+
+    private function show($category){
+        $slider = Slider::whereCategory($category)->with('slides')->first();
+        return Responses::success($slider);
+    }
+
+    private function create($category, $data){
+        $slider = Slider::whereCategory($category)->with('slides')->first();
+        $slider->slides()->create($data);
+        return Responses::success($slider);
+    }
+
+    private function update($category, $id, $data){
+        $slider = Slider::whereCategory($category)->with('slides')->first();
+        $slide = $slider->slides()->findOrFail($id);
+        $slide->update($data);
+        return Responses::success($slide);
     }
 
     public function hero($locale, $id=null){
-        $slider = Slider::whereCategory(Slider::HOMEPAGE_HERO_SLIDER)->with('slides')->first();
 
         if (request()->method() == 'GET')
-            return Responses::success($slider);
+           return $this->show(Slider::HOMEPAGE_HERO_SLIDER);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -67,29 +86,21 @@ class SlidersController extends Controller
                     $localized_data[$locale][$key] = $value[$locale];
             }
 
-            if (!$id){
-                $slider->slides()->create($localized_data);
-                return Responses::success($slider);
-            }else{
-                $slide = $slider->slides()->findOrFail($id);
-                $slide->update($localized_data);
-                return Responses::success($slide);
-            }
+            if (!$id)
+                return $this->create(Slider::HOMEPAGE_HERO_SLIDER, $localized_data);
+            else
+                return $this->update(Slider::HOMEPAGE_HERO_SLIDER, $id, $localized_data);
+
         }
 
-        if (request()->method() == 'DELETE'){
-            $slide = $slider->slides()->findOrFail($id);
-            $slide->delete();
-            return Responses::success([], 200, __("site.Slide Deleted Successfully"));
-        }
+        if (request()->method() == 'DELETE')
+            return $this->delete(Slider::HOMEPAGE_HERO_SLIDER, $id);
 
         return Responses::error([], 501, __("errors.Unsupported Method"));
     }
     public function projects($locale, $id=null){
-        $slider = Slider::whereCategory(Slider::HOMEPAGE_PROJECTS_SLIDER)->with('slides')->first();
-
         if (request()->method() == 'GET')
-            return Responses::success($slider);
+            return $this->show(Slider::HOMEPAGE_PROJECTS_SLIDER);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -135,28 +146,21 @@ class SlidersController extends Controller
                     $localized_data[$locale][$key] = $value[$locale];
             }
 
-            if (!$id){
-                $slider->slides()->create($localized_data);
-                return Responses::success($slider);
-            }else{
-                $slide = $slider->slides()->findOrFail($id);
-                $slide->update($localized_data);
-                return Responses::success($slide);
-            }
+            if (!$id)
+                return $this->create(Slider::HOMEPAGE_PROJECTS_SLIDER, $localized_data);
+            else
+                return $this->update(Slider::HOMEPAGE_PROJECTS_SLIDER, $id, $localized_data);
         }
 
-        if (request()->method() == 'DELETE'){
-            $slide = $slider->slides()->findOrFail($id);
-            $slide->delete();
-            return Responses::success([], 200, __("site.Slide Deleted Successfully"));
-        }
+        if (request()->method() == 'DELETE')
+            return $this->delete(Slider::HOMEPAGE_PROJECTS_SLIDER, $id);
+
+        return Responses::error([], 501, __("errors.Unsupported Method"));
     }
 
     public function feedbacks($locale, $id=null){
-        $slider = Slider::whereCategory(Slider::HOMEPAGE_FEEDBACK_SLIDER)->with('slides')->first();
-
         if (request()->method() == 'GET')
-            return Responses::success($slider);
+            return $this->show(Slider::HOMEPAGE_FEEDBACK_SLIDER);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -191,28 +195,21 @@ class SlidersController extends Controller
 
             }
 
-            if (!$id){
-                $slider->slides()->create($localized_data);
-                return Responses::success($slider);
-            }else{
-                $slide = $slider->slides()->findOrFail($id);
-                $slide->update($localized_data);
-                return Responses::success($slide);
-            }
+            if (!$id)
+                return $this->create(Slider::HOMEPAGE_FEEDBACK_SLIDER, $localized_data);
+            else
+                return $this->update(Slider::HOMEPAGE_FEEDBACK_SLIDER, $id, $localized_data);
         }
 
-        if (request()->method() == 'DELETE'){
-            $slide = $slider->slides()->findOrFail($id);
-            $slide->delete();
-            return Responses::success([], 200, __("site.Slide Deleted Successfully"));
-        }
+        if (request()->method() == 'DELETE')
+            return $this->delete(Slider::HOMEPAGE_FEEDBACK_SLIDER, $id);
+
+        return Responses::error([], 501, __("errors.Unsupported Method"));
     }
 
     public function partners($locale, $id=null){
-        $slider = Slider::whereCategory(Slider::HOMEPAGE_PARTNERS_SLIDER)->with('slides')->first();
-
         if (request()->method() == 'GET')
-            return Responses::success($slider);
+            return $this->show(Slider::HOMEPAGE_PARTNERS_SLIDER);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -254,31 +251,15 @@ class SlidersController extends Controller
                     $localized_data[$locale][$key] = $value[$locale];
             }
 
-            if (!$id){
-                $slider->slides()->create($localized_data);
-                return Responses::success($slider);
-            }else{
-                $slide = $slider->slides()->findOrFail($id);
-                $slide->update($localized_data);
-                return Responses::success($slide);
-            }
+            if (!$id)
+                return $this->create(Slider::HOMEPAGE_PARTNERS_SLIDER, $localized_data);
+            else
+                return $this->update(Slider::HOMEPAGE_PARTNERS_SLIDER, $id, $localized_data);
         }
 
-        if (request()->method() == 'DELETE'){
-            $slide = $slider->slides()->findOrFail($id);
-            $slide->delete();
-            return Responses::success([], 200, __("site.Slide Deleted Successfully"));
-        }
+        if (request()->method() == 'DELETE')
+            return $this->delete(Slider::HOMEPAGE_PARTNERS_SLIDER, $id);
+
+        return Responses::error([], 501, __("errors.Unsupported Method"));
     }
-
-
-//    public function categories(){
-//        return Responses::success(Slider::getCategories());
-//    }
-//
-//    public function create(){
-//        $data = request()->only('category');
-//        $slider = Slider::create($data);
-//        return Responses::success($slider);
-//    }
 }
