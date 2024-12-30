@@ -124,6 +124,6 @@ class SubServicesController extends Controller
     public function delete($locale, Service $service, SubService $sub_service){
         $sub_service = $service->sub_services()->findOrFail($sub_service->id);
         $sub_service->delete();
-        return Responses::success([], 200, "site.Sub Service deleted successfully");
+        return Responses::success([], 200, __("site.Sub Service deleted successfully"));
     }
 }

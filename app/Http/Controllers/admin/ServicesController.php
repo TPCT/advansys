@@ -6,7 +6,6 @@ use App\Helpers\Responses;
 use App\Http\Controllers\Controller;
 use App\Models\Service\Service;
 use Awcodes\Curator\Models\Media;
-use Illuminate\Http\Request;
 
 class ServicesController extends Controller
 {
@@ -115,6 +114,6 @@ class ServicesController extends Controller
 
     public function delete($locale, Service $service){
         $service->delete();
-        return Responses::success([], 200, "site.Service deleted successfully");
+        return Responses::success([], 200, __("site.Service deleted successfully"));
     }
 }

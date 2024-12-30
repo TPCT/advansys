@@ -4,10 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Helpers\Responses;
 use App\Http\Controllers\Controller;
-use App\Models\TeamMember\TeamMember;
+use App\Models\OurValue\OurValue;
+use App\Models\Service\Service;
 use Awcodes\Curator\Models\Media;
 
-class TeamMembersController extends Controller
+class OurValuesController extends Controller
 {
     private function localized_data($data){
         $localized_data = [];
@@ -46,23 +47,17 @@ class TeamMembersController extends Controller
     }
 
     public function index(){
-        return Responses::success(TeamMember::all());
+        return Responses::success(OurValue::all());
     }
 
-    public function show($locale, TeamMember $team_member){
-        return Responses::success($team_member);
-    }
-
-    public function create($locale){
+    public function create(){
         $validations = [
             'title' => 'required|array',
-            'description' => 'required|array',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
         }
 
         $data = request()->only(array_keys($validations));
@@ -74,39 +69,12 @@ class TeamMembersController extends Controller
 
         $data = $this->image($data);
         $data = $this->localized_data($data);
-        $team_member = TeamMember::create($data);
-
-        return Responses::success($team_member);
+        $service = OurValue::create($data);
+        return Responses::success($service);
     }
 
-    public function update($locale, TeamMember $team_member){
-        $validations = [
-            'title' => 'required|array',
-            'description' => 'required|array',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ];
-
-        foreach (config('app.locales') as $locale => $language) {
-            $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
-        }
-
-        $data = request()->only(array_keys($validations));
-        $validator = \Validator::make($data, $validations);
-
-        if ($validator->fails())
-            return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
-
-
-        $data = $this->image($data);
-        $data = $this->localized_data($data);
-        $team_member->update($data);
-
-        return Responses::success($team_member);
-    }
-
-    public function delete($locale, TeamMember $team_member){
-        $team_member->delete();
-        return Responses::success([], 200, __("site.Team member deleted successfully"));
+    public function delete($locale, OurValue $our_value){
+        $our_value->delete();
+        return Responses::success([], 200, __("site.Service deleted successfully"));
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\FormsController;
+use App\Http\Controllers\admin\OurValuesController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\ServicesController;
 use App\Http\Controllers\admin\SettingsController;
@@ -128,5 +129,13 @@ Route::middleware(['auth:admin'])->group(function () {
                     Route::post('/{admin}', 'update')->name('admin.management.users.update');
                     Route::delete('/{admin}', 'delete')->name('admin.management.users.delete');
                 });
+        });
+
+    Route::prefix('our-values')
+        ->controller(OurValuesController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('admin.our-values.index');
+            Route::post('', 'create')->name('admin.our-values.create');
+            Route::delete('/{our_value}', 'delete')->name('admin.our-values.delete');
         });
 });
