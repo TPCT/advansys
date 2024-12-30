@@ -91,6 +91,7 @@ Route::middleware(['auth:admin'])->group(function () {
                 ->group(function () {
                     Route::get('', 'index')->name('admin.services.sub-services.index');
                     Route::post('', 'create')->name('admin.services.sub-services.create');
+                    Route::get('/{sub_service}', 'show')->name('admin.services.sub-services.show');
                     Route::post('/{sub_service}', 'update')->name('admin.services.sub-services.update');
                     Route::delete('/{sub_service}', 'delete')->name('admin.services.sub-services.delete');
                 });

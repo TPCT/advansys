@@ -65,7 +65,7 @@ class SubService extends Model implements \OwenIt\Auditing\Contracts\Auditable
     public $translationModel = SubServiceLang::class;
 
     public array $upload_attributes = [
-        'image_id'
+        'image_id', 'icon_id'
     ];
 
     public array $translatedAttributes = [

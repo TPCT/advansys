@@ -83,7 +83,7 @@ class TeamMembersController extends Controller
         $validations = [
             'title' => 'required|array',
             'description' => 'required|array',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {

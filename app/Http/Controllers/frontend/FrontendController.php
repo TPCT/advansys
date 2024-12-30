@@ -49,6 +49,10 @@ class FrontendController extends Controller
         ]);
     }
 
+    public function blog($locale, News $blog){
+        return Responses::success($blog);
+    }
+
     public function service($locale, Service $service){
         $service->load('sub_services');
         return Responses::success($service);

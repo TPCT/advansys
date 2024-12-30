@@ -13,4 +13,8 @@ trait HasMedia
     public function cover_image(){
         return $this->hasOne(Media::class, 'id', 'cover_image_id');
     }
+
+    public function icon(){
+        return $this->hasOne(Media::class, 'id', 'icon_id');
+    }
 }

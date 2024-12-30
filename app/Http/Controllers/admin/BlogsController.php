@@ -107,7 +107,7 @@ class BlogsController extends Controller
             'title' => 'required|array',
             'description' => 'required|array',
             'content' => 'required|array',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
@@ -133,7 +133,7 @@ class BlogsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($locale, News $blog)
+    public function delete($locale, News $blog)
     {
         $blog->delete();
         return Responses::success([], 200, __("site.Blog deleted successfully"));

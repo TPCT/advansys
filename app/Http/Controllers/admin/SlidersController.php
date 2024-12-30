@@ -83,7 +83,7 @@ class SlidersController extends Controller
                 'title' => 'required|array',
                 'second_title' => 'required|array',
                 'slide_url' => 'required|array',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
 
             foreach (config('app.locales') as $locale => $language) {
@@ -121,7 +121,7 @@ class SlidersController extends Controller
             $validations = [
                 'title' => 'required|array',
                 'second_title' => 'required|array',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
 
             foreach (config('app.locales') as $locale => $language) {
@@ -196,7 +196,7 @@ class SlidersController extends Controller
 
         if (request()->method() == 'POST'){
             $validations = [
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
 
             $data = request()->only(array_keys($validations));

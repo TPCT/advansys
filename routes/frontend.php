@@ -4,6 +4,7 @@
     Route::controller(FrontendController::class)
         ->group(function (){
             Route::get('/home', 'home')->name('frontend.home');
+            Route::get('/blogs/{blog}', 'blog')->name('frontend.blog');
             Route::get('/services/{service}', 'service')->name('frontend.services');
             Route::any('/contact-us', 'contact_us')->name('frontend.contact');
             Route::get('/about-us', 'about_us')->name('frontend.about');
