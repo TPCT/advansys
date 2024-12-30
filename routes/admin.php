@@ -11,6 +11,8 @@ use App\Http\Controllers\admin\TeamMembersController;
 use App\Http\Controllers\admin\BlogsController;
 use App\Http\Controllers\admin\TranslationCategoriesController;
 use App\Http\Controllers\admin\TranslationsController;
+use App\Http\Controllers\admin\UsersController;
+use App\Http\Middleware\IsSuperAdmin;
 
 Route::prefix('auth')
     ->controller(AuthController::class)
@@ -24,7 +26,7 @@ Route::middleware(['auth:admin'])->group(function () {
         ->controller(ProfileController::class)
         ->group(function () {
             Route::get('me', 'me')->name('admin.profile.me');
-            Route::put('update', 'update')->name('admin.profile.update');
+            Route::post('update', 'update')->name('admin.profile.update');
         });
 
     Route::prefix('settings')
@@ -112,6 +114,19 @@ Route::middleware(['auth:admin'])->group(function () {
                     Route::post('/{category}/translations/{translation}', 'update')->name('admin.translations.categories.translations.update');
                     Route::delete('/{category}/translations/{translation}', 'delete')->name('admin.translations.categories.translations.delete');
                 });
+        });
 
+    Route::prefix('management')
+        ->middleware([IsSuperAdmin::class])
+        ->group(function () {
+            Route::prefix('users')
+                ->controller(UsersController::class)
+                ->group(function () {
+                    Route::get('', 'index')->name('admin.management.users.index');
+                    Route::post('', 'create')->name('admin.management.users.create');
+                    Route::get('/{admin}', 'show')->name('admin.management.users.show');
+                    Route::post('/{admin}', 'update')->name('admin.management.users.update');
+                    Route::delete('/{admin}', 'delete')->name('admin.management.users.delete');
+                });
         });
 });

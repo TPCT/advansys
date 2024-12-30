@@ -30,6 +30,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|TranslationCategory whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TranslationCategory whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TranslationCategory whereUserId($value)
+ * @property int $admin_id
+ * @method static \Illuminate\Database\Eloquent\Builder|TranslationCategory whereAdminId($value)
  * @mixin \Eloquent
  */
 class TranslationCategory extends Model implements Auditable

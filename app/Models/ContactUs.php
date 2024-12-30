@@ -31,6 +31,8 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|ContactUs whereUpdatedAt($value)
  * @property int $type 0 -> client, 1 -> merchant
  * @method static \Illuminate\Database\Eloquent\Builder|ContactUs whereType($value)
+ * @property string|null $website
+ * @method static \Illuminate\Database\Eloquent\Builder|ContactUs whereWebsite($value)
  * @mixin \Eloquent
  */
 class ContactUs extends Model implements \OwenIt\Auditing\Contracts\Auditable

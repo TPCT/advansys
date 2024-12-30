@@ -36,6 +36,23 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|SubService wherePublishedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubService whereServiceId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|SubService whereUpdatedAt($value)
+ * @property int $status
+ * @property-read \Awcodes\Curator\Models\Media|null $cover_image
+ * @property-read \Awcodes\Curator\Models\Media|null $image
+ * @property-read \App\Models\Service\SubServiceLang|null $translation
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Service\SubServiceLang> $translations
+ * @property-read int|null $translations_count
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService listsTranslations(string $translationField)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService notTranslatedIn(?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService orWhereTranslation(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService orWhereTranslationLike(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService orderByTranslation(string $translationField, string $sortMethod = 'asc')
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService translated()
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService translatedIn(?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService whereTranslation(string $translationField, $value, ?string $locale = null, string $method = 'whereHas', string $operator = '=')
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService whereTranslationLike(string $translationField, $value, ?string $locale = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService withTranslation(?string $locale = null)
  * @mixin \Eloquent
  */
 class SubService extends Model implements \OwenIt\Auditing\Contracts\Auditable

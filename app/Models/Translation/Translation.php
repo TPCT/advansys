@@ -43,6 +43,8 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Translation withTranslation(?string $locale = null)
+ * @property int $admin_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Translation whereAdminId($value)
  * @mixin \Eloquent
  */
 class Translation extends Model implements \OwenIt\Auditing\Contracts\Auditable

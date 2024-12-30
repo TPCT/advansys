@@ -52,6 +52,8 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|Service whereTranslationLike(string $translationField, $value, ?string $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|Service whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Service withTranslation(?string $locale = null)
+ * @property string $slug
+ * @method static \Illuminate\Database\Eloquent\Builder|Service whereSlug($value)
  * @mixin \Eloquent
  */
 class Service extends Model implements \OwenIt\Auditing\Contracts\Auditable

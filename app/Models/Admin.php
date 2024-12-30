@@ -49,6 +49,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  * @property-read int|null $permissions_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \Spatie\Permission\Models\Role> $roles
  * @property-read int|null $roles_count
+ * @property int $super_admin
+ * @method static \Illuminate\Database\Eloquent\Builder|Admin whereSuperAdmin($value)
  * @mixin \Eloquent
  */
 class Admin extends \Illuminate\Foundation\Auth\User implements JWTSubject
@@ -75,7 +77,6 @@ class Admin extends \Illuminate\Foundation\Auth\User implements JWTSubject
      * @var array<int, string>
      */
     protected $hidden = [
-        'id',
         'created_at',
         'updated_at',
         'deleted_at',
