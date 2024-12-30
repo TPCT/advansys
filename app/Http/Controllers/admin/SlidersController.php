@@ -35,6 +35,43 @@ class SlidersController extends Controller
         return Responses::success($slide);
     }
 
+    private function localized_data($data){
+        $localized_data = [];
+        foreach (config('app.locales') as $locale => $language) {
+            $localized_data[$locale] = [];
+            foreach ($data as $key => $value) {
+                if (is_array($value)) {
+                    $localized_data[$locale][$key] = $value[$locale];
+                    continue;
+                }
+                $localized_data[$key] = $value;
+            }
+        }
+        return $localized_data;
+    }
+
+    private function image($data){
+        foreach ($data['image'] as $locale => $image){
+            if (request()->hasFile('image.'.$locale)) {
+                $filename = \Str::uuid() . '.' . $image->extension();
+                request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
+                $data['image_id'][$locale] = Media::create([
+                    'disk' => 'public',
+                    'directory' => 'media',
+                    'visibility' => 'public',
+                    'name' => $filename,
+                    'path' => 'media/' . $filename,
+                    'size' => $image->getSize(),
+                    'type' => $image->getMimeType(),
+                    'ext' => $image->getClientOriginalExtension(),
+                    'title' => $image->getClientOriginalName(),
+                ])->id;
+            }
+        }
+        unset($data['image']);
+        return $data;
+    }
+
     public function hero($locale, $id=null){
 
         if (request()->method() == 'GET')
@@ -61,35 +98,13 @@ class SlidersController extends Controller
             if ($validator->fails())
                 return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
 
-            foreach ($data['image'] as $locale => $image){
-                if (request()->hasFile('image.'.$locale)) {
-                    $filename = \Str::uuid() . '.' . $image->extension();
-                    request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
-                    $data['image_id'][$locale] = Media::create([
-                        'disk' => 'public',
-                        'directory' => 'media',
-                        'visibility' => 'public',
-                        'name' => $filename,
-                        'path' => 'media/' . $filename,
-                        'size' => $image->getSize(),
-                        'type' => $image->getMimeType(),
-                        'ext' => $image->getClientOriginalExtension(),
-                        'title' => $image->getClientOriginalName(),
-                    ])->id;
-                }
-            }
-            unset($data['image']);
-            $localized_data = [];
-            foreach (config('app.locales') as $locale => $language) {
-                $localized_data[$locale] = [];
-                foreach ($data as $key => $value)
-                    $localized_data[$locale][$key] = $value[$locale];
-            }
+            $data = $this->image($data);
+            $data = $this->localized_data($data);
 
             if (!$id)
-                return $this->create(Slider::HOMEPAGE_HERO_SLIDER, $localized_data);
+                return $this->create(Slider::HOMEPAGE_HERO_SLIDER, $data);
             else
-                return $this->update(Slider::HOMEPAGE_HERO_SLIDER, $id, $localized_data);
+                return $this->update(Slider::HOMEPAGE_HERO_SLIDER, $id, $data);
 
         }
 
@@ -121,35 +136,13 @@ class SlidersController extends Controller
             if ($validator->fails())
                 return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
 
-            foreach ($data['image'] as $locale => $image){
-                if (request()->hasFile('image.'.$locale)) {
-                    $filename = \Str::uuid() . '.' . $image->extension();
-                    request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
-                    $data['image_id'][$locale] = Media::create([
-                        'disk' => 'public',
-                        'directory' => 'media',
-                        'visibility' => 'public',
-                        'name' => $filename,
-                        'path' => 'media/' . $filename,
-                        'size' => $image->getSize(),
-                        'type' => $image->getMimeType(),
-                        'ext' => $image->getClientOriginalExtension(),
-                        'title' => $image->getClientOriginalName(),
-                    ])->id;
-                }
-            }
-            unset($data['image']);
-            $localized_data = [];
-            foreach (config('app.locales') as $locale => $language) {
-                $localized_data[$locale] = [];
-                foreach ($data as $key => $value)
-                    $localized_data[$locale][$key] = $value[$locale];
-            }
+            $data = $this->image($data);
+            $data = $this->localized_data($data);
 
             if (!$id)
-                return $this->create(Slider::HOMEPAGE_PROJECTS_SLIDER, $localized_data);
+                return $this->create(Slider::HOMEPAGE_PROJECTS_SLIDER, $data);
             else
-                return $this->update(Slider::HOMEPAGE_PROJECTS_SLIDER, $id, $localized_data);
+                return $this->update(Slider::HOMEPAGE_PROJECTS_SLIDER, $id, $data);
         }
 
         if (request()->method() == 'DELETE')
@@ -182,23 +175,12 @@ class SlidersController extends Controller
             if ($validator->fails())
                 return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
 
-            $localized_data = [];
-            foreach (config('app.locales') as $locale => $language) {
-                $localized_data[$locale] = [];
-                foreach ($data as $key => $value){
-                    if (is_array($value)) {
-                        $localized_data[$locale][$key] = $value[$locale];
-                        continue;
-                    }
-                    $localized_data[$key] = $value;
-                }
-
-            }
+            $data = $this->localized_data($data);
 
             if (!$id)
-                return $this->create(Slider::HOMEPAGE_FEEDBACK_SLIDER, $localized_data);
+                return $this->create(Slider::HOMEPAGE_FEEDBACK_SLIDER, $data);
             else
-                return $this->update(Slider::HOMEPAGE_FEEDBACK_SLIDER, $id, $localized_data);
+                return $this->update(Slider::HOMEPAGE_FEEDBACK_SLIDER, $id, $data);
         }
 
         if (request()->method() == 'DELETE')
@@ -226,35 +208,13 @@ class SlidersController extends Controller
             if ($validator->fails())
                 return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
 
-            foreach ($data['image'] as $locale => $image){
-                if (request()->hasFile('image.'.$locale)) {
-                    $filename = \Str::uuid() . '.' . $image->extension();
-                    request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
-                    $data['image_id'][$locale] = Media::create([
-                        'disk' => 'public',
-                        'directory' => 'media',
-                        'visibility' => 'public',
-                        'name' => $filename,
-                        'path' => 'media/' . $filename,
-                        'size' => $image->getSize(),
-                        'type' => $image->getMimeType(),
-                        'ext' => $image->getClientOriginalExtension(),
-                        'title' => $image->getClientOriginalName(),
-                    ])->id;
-                }
-            }
-            unset($data['image']);
-            $localized_data = [];
-            foreach (config('app.locales') as $locale => $language) {
-                $localized_data[$locale] = [];
-                foreach ($data as $key => $value)
-                    $localized_data[$locale][$key] = $value[$locale];
-            }
+            $data = $this->image($data);
+            $data = $this->localized_data($data);
 
             if (!$id)
-                return $this->create(Slider::HOMEPAGE_PARTNERS_SLIDER, $localized_data);
+                return $this->create(Slider::HOMEPAGE_PARTNERS_SLIDER, $data);
             else
-                return $this->update(Slider::HOMEPAGE_PARTNERS_SLIDER, $id, $localized_data);
+                return $this->update(Slider::HOMEPAGE_PARTNERS_SLIDER, $id, $data);
         }
 
         if (request()->method() == 'DELETE')

@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AuthController;
 use App\Http\Controllers\admin\ProfileController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\SlidersController;
+use App\Http\Controllers\admin\TeamMembersController;
 
 Route::prefix('auth')
     ->controller(AuthController::class)
@@ -39,5 +40,15 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::any('/feedbacks/{id}', 'feedbacks')->name('admin.sliders.feedbacks_update');
             Route::any('/partners', 'partners')->name('admin.sliders.partners');
             Route::any('/partners/{id}', 'partners')->name('admin.sliders.partners_update');
+        });
+
+    Route::prefix('team-members')
+        ->controller(TeamMembersController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('admin.team-members.index');
+            Route::post('', 'create')->name('admin.team-members.create');
+            Route::get('/{team_member}', 'show')->name('admin.team-members.show');
+            Route::post('/{team_member}', 'update')->name('admin.team-members.update');
+            Route::delete('/{team_member}', 'delete')->name('admin.team-members.delete');
         });
 });
