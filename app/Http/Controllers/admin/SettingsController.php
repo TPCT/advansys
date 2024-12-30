@@ -14,19 +14,13 @@ class SettingsController extends Controller
         $logos = [];
 
         $settings = [
-            'site.logo' => app(Site::class)->translate('logo'),
-            'site.footer_logo' => app(Site::class)->translate('footer_logo'),
-            'site.footer_description' => app(Site::class)->footer_description,
-            'site.fav_icon' => Media::find(app(Site::class)->fav_icon)->url,
-            'site.email' => app(Site::class)->email,
-            'site.phone' => app(Site::class)->phone,
-            'site.address' => app(Site::class)->address,
-            'general.title' => app(General::class)->site_title,
-            'general.description' => app(General::class)->site_description,
-            'general.admin_email' => app(General::class)->site_admin_email,
-            'general.default_locale' => app(General::class)->default_locale,
-            'general.country' => app(General::class)->site_country,
-            'general.timezone' => app(General::class)->site_timezone
+            'logo' => app(Site::class)->translate('logo'),
+            'footer_logo' => app(Site::class)->translate('footer_logo'),
+            'footer_description' => app(Site::class)->footer_description,
+            'fav_icon' => Media::find(app(Site::class)->fav_icon)->url,
+            'email' => app(Site::class)->email,
+            'phone' => app(Site::class)->phone,
+            'address' => app(Site::class)->address,
         ];
 
         foreach ($settings as $key => $value) {
@@ -42,39 +36,25 @@ class SettingsController extends Controller
 
     public function update(){
         $data = request()->only([
-            'site.logo',
-            'site.footer_logo',
-            'site.footer_description',
-            'site.fav_icon',
-            'site.email',
-            'site.phone',
-            'site.address',
-            'general.site_title',
-            'general.site_description',
-            'general.site_admin_email',
-            'general.country',
-            'general.timezone',
-            'general.default_locale',
+            'logo',
+            'footer_logo',
+            'footer_description',
+            'fav_icon',
+            'email',
+            'phone',
+            'address',
         ]);
 
         $validator = \Validator::make($data, [
-            'site.logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'site.footer_logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'site.footer_description' => 'sometimes|array',
-            'site.footer_description.*' => 'string|nullable',
-            'site.fav_icon' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'site.email' => 'sometimes|email',
-            'site.phone' => 'sometimes|string',
-            'site.address' => 'sometimes|array',
-            'site.address.*' => 'string|nullable',
-            'general.site_title' => 'sometimes|array',
-            'general.site_title.*' => 'string|nullable',
-            'general.site_description' => 'sometimes|array',
-            'general.site_description.*' => 'string|nullable',
-            'general.site_admin_email' => 'sometimes|email',
-            'general.country' => 'sometimes',
-            'general.timezone' => 'sometimes',
-            'general.default_locale' => 'sometimes|exists:languages,locale'
+            'logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'footer_logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'footer_description' => 'sometimes|array',
+            'footer_description.*' => 'string|nullable',
+            'fav_icon' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'email' => 'sometimes|email',
+            'phone' => 'sometimes|string',
+            'address' => 'sometimes|array',
+            'address.*' => 'string|nullable',
         ]);
 
         if ($validator->fails())
@@ -88,10 +68,10 @@ class SettingsController extends Controller
 
                     foreach (config('app.locales') as $locale => $language){
                         $images[$locale] = null;
-                        if (request()->hasFile('site.' . $key)) {
-                            $file = request()->file('site.' . $key);
+                        if (request()->hasFile('' . $key)) {
+                            $file = request()->file('' . $key);
                             $filename = \Str::uuid() . '.' . $file->extension();
-                            request()->file('site.' . $key)->storePubliclyAs('public/media', $filename);
+                            request()->file('' . $key)->storePubliclyAs('public/media', $filename);
                             $images[$locale] = Media::create([
                                 'disk' => 'public',
                                 'directory' => 'media',
@@ -111,9 +91,9 @@ class SettingsController extends Controller
                 }
                 elseif ($key == "fav_icon"){
                     $image = null;
-                    if (request()->hasFile('site.fav_icon')){
+                    if (request()->hasFile('fav_icon')){
                         $filename = \Str::uuid() . '.' . $value->extension();
-                        request()->file('site.fav_icon')->storePubliclyAs('public/media', $filename);
+                        request()->file('fav_icon')->storePubliclyAs('public/media', $filename);
                         $image = Media::create([
                             'disk' => 'public',
                             'directory' => 'media',
@@ -136,14 +116,6 @@ class SettingsController extends Controller
             }
         }
 
-        if (request()->has('general')){
-            $settings = app(General::class);
-            foreach(request()->general as $key => $value){
-                $settings->$key = $value;
-            }
-            $settings->save();
-        }
-
-        return Responses::success([], 200, __("site.Settings updated successfully"));
+        return Responses::success([], 200, __("Settings updated successfully"));
     }
 }
