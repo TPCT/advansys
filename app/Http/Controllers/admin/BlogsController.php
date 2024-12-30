@@ -71,6 +71,7 @@ class BlogsController extends Controller
             'description' => 'required|array',
             'content' => 'required|array',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'published_at' => 'sometimes|date',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
@@ -108,6 +109,7 @@ class BlogsController extends Controller
             'description' => 'required|array',
             'content' => 'required|array',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'published_at' => 'sometimes|date',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
