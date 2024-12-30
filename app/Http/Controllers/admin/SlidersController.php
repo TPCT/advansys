@@ -167,7 +167,7 @@ class SlidersController extends Controller
                 $validations['title.' . $locale] = 'required|string|max:255';
                 $validations['second_title.' . $locale] = 'required|string|max:255';
                 $validations['description.' . $locale] = 'required|string|max:255';
-                $validations['description_2' . $locale] = 'required|string|max:255';
+                $validations['description_2.' . $locale] = 'required|string|max:255';
             }
 
             $data = request()->only(array_keys($validations));
