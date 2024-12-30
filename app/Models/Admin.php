@@ -6,7 +6,9 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use OwenIt\Auditing\Contracts\Auditable;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
 /**
  * App\Models\User
@@ -40,9 +42,9 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static \Illuminate\Database\Eloquent\Builder|Admin withoutRole($roles, $guard = null)
  * @mixin \Eloquent
  */
-class Admin extends Authenticatable
+class Admin extends \Illuminate\Foundation\Auth\User implements JWTSubject
 {
-    use HasApiTokens, Notifiable, HasRoles;
+    use HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,6 +66,10 @@ class Admin extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
         'password',
         'remember_token',
     ];
@@ -77,4 +83,14 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
 }

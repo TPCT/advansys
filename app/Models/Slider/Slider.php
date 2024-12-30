@@ -65,19 +65,20 @@ use OwenIt\Auditing\Auditable;
 
 class Slider extends Model implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use HasAuthor, Auditable, HasStatus, \App\Helpers\Translatable, \App\Helpers\HasTranslations, HasSlug, ApiResponse;
+    use HasAuthor, Auditable, HasStatus, ApiResponse;
 
-    public const HOMEPAGE_PROMOTED_OFFERS_SLIDER = "Homepage Promoted Offers Slider";
-    public const HOMEPAGE_BEST_SHOPS_SLIDER = "Homepage Best Shops Slider";
-    public const TRENDING_NEAR_YOU_SLIDER = "Trending Near You Slider";
+    public const HOMEPAGE_HERO_SLIDER = "Homepage Hero Slider";
+    public const HOMEPAGE_PROJECTS_SLIDER = "Homepage Projects Slider";
+    public const HOMEPAGE_FEEDBACK_SLIDER = "Homepage Feedback Slider";
+    public const HOMEPAGE_PARTNERS_SLIDER = "Homepage Partners Slider";
 
-    public $translationModel = SliderLang::class;
 
     public static function getCategories(){
         return [
-            self::HOMEPAGE_PROMOTED_OFFERS_SLIDER => __(self::HOMEPAGE_PROMOTED_OFFERS_SLIDER),
-            self::HOMEPAGE_BEST_SHOPS_SLIDER => __(self::HOMEPAGE_BEST_SHOPS_SLIDER),
-            self::TRENDING_NEAR_YOU_SLIDER => __(self::TRENDING_NEAR_YOU_SLIDER),
+            self::HOMEPAGE_HERO_SLIDER => __(self::HOMEPAGE_HERO_SLIDER),
+            self::HOMEPAGE_PROJECTS_SLIDER => __(self::HOMEPAGE_PROJECTS_SLIDER),
+            self::HOMEPAGE_FEEDBACK_SLIDER => __(self::HOMEPAGE_FEEDBACK_SLIDER),
+            self::HOMEPAGE_PARTNERS_SLIDER => __(self::HOMEPAGE_PARTNERS_SLIDER),
         ];
     }
 
@@ -85,19 +86,7 @@ class Slider extends Model implements \OwenIt\Auditing\Contracts\Auditable
         'id', 'created_at', 'updated_at'
     ];
 
-    public array $translatedAttributes = [
-        'title'
-    ];
-
     public function slides(){
-        return $this->hasMany(SliderSlide::class)->orderBy('order');
-    }
-
-    public function slider_category(){
-        return $this->belongsTo(Category::class, 'category_id');
-    }
-
-    public function slider_sub_category(){
-        return $this->belongsTo(SubCategory::class, 'sub_category_id');
+        return $this->hasMany(SliderSlide::class)->orderBy('id');
     }
 }

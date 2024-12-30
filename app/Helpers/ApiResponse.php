@@ -11,6 +11,7 @@ trait ApiResponse
     }
 
     public function toArray(){
+        $this->refresh();
         $api_hidden_attributes = $this->get_api_hidden_attributes();
         $this->makeHidden($api_hidden_attributes);
         $attributes = Parent::toArray();

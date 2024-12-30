@@ -37,18 +37,8 @@ return [
 
     'guards' => [
         'admin' => [
-            'driver' => 'session',
+            'driver' => 'jwt',
             'provider' => 'admins',
-        ],
-
-        'merchants' => [
-            'driver' => 'jwt',
-            'provider' => 'merchants',
-        ],
-
-        'clients' => [
-            'driver' => 'jwt',
-            'provider' => 'clients',
         ]
     ],
 
@@ -74,16 +64,6 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\Admin::class,
         ],
-
-        'merchants' => [
-            'driver' => 'eloquent',
-            'model' => \App\Models\Merchant\Merchant::class,
-        ],
-
-        'clients' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Client::class,
-        ]
     ],
 
     /*

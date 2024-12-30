@@ -15,11 +15,6 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (in_array($request->segment(1), [
-            'livewire', 'admin', 'merchant', 'storage', 'select-language'
-        ]))
-            return $next($request);
-
         if (in_array($request->header('accept-language'), array_keys(config('app.locales')))){
             session()->put('locale', $request->header('accept-language'));
         }

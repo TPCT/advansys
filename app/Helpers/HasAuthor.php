@@ -10,7 +10,7 @@ trait HasAuthor
         parent::creating(function($query){
             if ($query->admin_id)
                 return;
-            $query->admin_id = Filament::auth()->user()->id;
+            $query->admin_id = auth()->user()->id;
         });
     }
 
