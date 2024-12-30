@@ -160,12 +160,14 @@ class SlidersController extends Controller
                 'title' => 'required|array',
                 'second_title' => 'required|array',
                 'description' => 'required|array',
+                'description_2' => 'required|array',
             ];
 
             foreach (config('app.locales') as $locale => $language) {
                 $validations['title.' . $locale] = 'required|string|max:255';
                 $validations['second_title.' . $locale] = 'required|string|max:255';
                 $validations['description.' . $locale] = 'required|string|max:255';
+                $validations['description_2' . $locale] = 'required|string|max:255';
             }
 
             $data = request()->only(array_keys($validations));

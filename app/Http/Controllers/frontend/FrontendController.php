@@ -105,10 +105,10 @@ class FrontendController extends Controller
             'about_us_image' => Media::find(app(Site::class)->about_us_image)?->url,
             'email' => app(Site::class)->email,
             'phone' => app(Site::class)->phone,
-            'footer_description' => app(Site::class)->footer_description,
-            'address' => app(Site::class)->address,
             'number_of_projects' => app(Site::class)->number_of_projects,
             'number_of_years' => app(Site::class)->number_of_years,
+            'footer_description' => app(Site::class)->translate('footer_description'),
+            'address' => app(Site::class)->translate('address'),
             'who_we_are_title' => app(Site::class)->translate('who_we_are_title'),
             'who_we_are_description' => app(Site::class)->translate('who_we_are_description'),
             'tab_1_title' => app(Site::class)->translate('tab_1_title'),
@@ -120,6 +120,10 @@ class FrontendController extends Controller
             'vision_description' => app(Site::class)->translate('vision_description'),
             'mission_description' => app(Site::class)->translate('mission_description'),
         ];
+
+        $settings['gallery'] = Media::latest()->take(6)->get()->transform(function($item){
+            return ['image' => $item->url];
+        });
 
         foreach ($settings as $key => $value) {
             if (is_array($value)) {
