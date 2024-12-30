@@ -14,6 +14,8 @@ class SettingsController extends Controller
         $logos = [];
 
         $settings = [
+            'site.logo' => app(Site::class)->translate('logo'),
+            'site.footer_logo' => app(Site::class)->translate('footer_logo'),
             'site.footer_description' => app(Site::class)->footer_description,
             'site.fav_icon' => Media::find(app(Site::class)->fav_icon)->url,
             'site.email' => app(Site::class)->email,
@@ -26,12 +28,15 @@ class SettingsController extends Controller
             'general.country' => app(General::class)->site_country,
             'general.timezone' => app(General::class)->site_timezone
         ];
-        foreach (config('app.locales') as $locale => $language) {
-            $logos['logo'][$locale] = Media::find(app(Site::class)->logo[$locale])->url;
-            $logos['footer_logo'][$locale] = Media::find(app(Site::class)->footer_logo[$locale])->url;
-        }
 
-        $settings = array_merge($logos, $settings);
+        foreach ($settings as $key => $value) {
+            if (is_array($value)) {
+                foreach ($value as $locale => $data) {
+                    $settings[$key . "_" . $locale] = $data;
+                }
+                unset($settings[$key]);
+            }
+        }
         return Responses::success($settings);
     }
 
@@ -53,10 +58,8 @@ class SettingsController extends Controller
         ]);
 
         $validator = \Validator::make($data, [
-            'site.logo' => 'sometimes|array',
-            'site.logo.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'site.footer_logo' => 'sometimes|array',
-            'site.footer_logo.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'site.logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'site.footer_logo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'site.footer_description' => 'sometimes|array',
             'site.footer_description.*' => 'string|nullable',
             'site.fav_icon' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -85,10 +88,10 @@ class SettingsController extends Controller
 
                     foreach (config('app.locales') as $locale => $language){
                         $images[$locale] = null;
-                        if (request()->hasFile('site.'.$key . "." . $locale)) {
-                            $file = $value[$locale];
+                        if (request()->hasFile('site.' . $key)) {
+                            $file = request()->file('site.' . $key);
                             $filename = \Str::uuid() . '.' . $file->extension();
-                            request()->file('site.' . $key . "." . $locale)->storePubliclyAs('public/media', $filename);
+                            request()->file('site.' . $key)->storePubliclyAs('public/media', $filename);
                             $images[$locale] = Media::create([
                                 'disk' => 'public',
                                 'directory' => 'media',
@@ -140,5 +143,7 @@ class SettingsController extends Controller
             }
             $settings->save();
         }
+
+        return Responses::success([], 200, __("site.Settings updated successfully"));
     }
 }

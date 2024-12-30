@@ -51,10 +51,11 @@ class SlidersController extends Controller
     }
 
     private function image($data){
-        foreach ($data['image'] as $locale => $image){
-            if (request()->hasFile('image.'.$locale)) {
+        foreach (config('app.locales') as $locale => $locale){
+            if (request()->hasFile('image')) {
+                $image = $data['image'];
                 $filename = \Str::uuid() . '.' . $image->extension();
-                request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
+                request()->file('image')->storePubliclyAs('public/media', $filename);
                 $data['image_id'][$locale] = Media::create([
                     'disk' => 'public',
                     'directory' => 'media',
@@ -82,14 +83,13 @@ class SlidersController extends Controller
                 'title' => 'required|array',
                 'second_title' => 'required|array',
                 'slide_url' => 'required|array',
-                'image' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
 
             foreach (config('app.locales') as $locale => $language) {
                 $validations['title.' . $locale] = 'required|string|max:255';
                 $validations['second_title.' . $locale] = 'required|string|max:255';
                 $validations['slide_url.' . $locale] = 'required|string|max:255';
-                $validations['image.' . $locale] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
             }
 
             $data = request()->only(array_keys($validations));
@@ -121,13 +121,12 @@ class SlidersController extends Controller
             $validations = [
                 'title' => 'required|array',
                 'second_title' => 'required|array',
-                'image' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
 
             foreach (config('app.locales') as $locale => $language) {
                 $validations['title.' . $locale] = 'required|string|max:255';
                 $validations['second_title.' . $locale] = 'required|string|max:255';
-                $validations['image.' . $locale] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
             }
 
             $data = request()->only(array_keys($validations));
@@ -195,12 +194,8 @@ class SlidersController extends Controller
 
         if (request()->method() == 'POST'){
             $validations = [
-                'image' => 'required|array',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ];
-
-            foreach (config('app.locales') as $locale => $language) {
-                $validations['image.' . $locale] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
-            }
 
             $data = request()->only(array_keys($validations));
             $validator = \Validator::make($data, $validations);

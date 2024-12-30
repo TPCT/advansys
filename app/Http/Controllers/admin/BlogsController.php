@@ -27,10 +27,11 @@ class BlogsController extends Controller
     }
 
     private function image($data){
-        foreach ($data['image'] as $locale => $image){
-            if (request()->hasFile('image.'.$locale)) {
+        foreach (config('app.locales') as $locale => $language){
+            if (request()->hasFile('image')) {
+                $image = $data['image'];
                 $filename = \Str::uuid() . '.' . $image->extension();
-                request()->file('image.' . $locale)->storePubliclyAs('public/media', $filename);
+                request()->file('image')->storePubliclyAs('public/media', $filename);
                 $data['image_id'][$locale] = Media::create([
                     'disk' => 'public',
                     'directory' => 'media',
@@ -69,14 +70,13 @@ class BlogsController extends Controller
             'title' => 'required|array',
             'description' => 'required|array',
             'content' => 'required|array',
-            'image' => 'required|array',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
             $validations['content.' . $locale] = 'required|string|max:255';
-            $validations['image.' . $locale] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
 
         $data = request()->only(array_keys($validations));
@@ -107,14 +107,13 @@ class BlogsController extends Controller
             'title' => 'required|array',
             'description' => 'required|array',
             'content' => 'required|array',
-            'image' => 'required|array',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
             $validations['content.' . $locale] = 'required|string|max:255';
-            $validations['image.' . $locale] = 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048';
         }
 
         $data = request()->only(array_keys($validations));

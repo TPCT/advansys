@@ -55,11 +55,21 @@ trait ApiResponse
         if ($this->translations) {
             unset($attributes['translations']);
             $output['translations'] = [];
+            $unified_output = [];
             foreach ($this->translations as $translation) {
                 $translation_output = [];
                 $this->filter_translated_attributes($translation->toArray(), $image_uploads, $translated_attributes, $translation_output, true);
                 $output['translations'][] = $translation_output;
             }
+            foreach ($output['translations'] as $translation) {
+                foreach ($translation as $key => $value) {
+                    if ($key == "language")
+                        continue;
+                    $unified_output[$key. "_" . $translation['language']] = $value;
+                }
+            }
+            unset($output['translations']);
+            $output = array_merge($output, $unified_output);
         }
         return $output;
     }
