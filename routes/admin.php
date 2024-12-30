@@ -35,5 +35,9 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::any('/hero/{id}', 'hero')->name('admin.sliders.hero_update');
             Route::any('/projects', 'projects')->name('admin.sliders.projects');
             Route::any('/projects/{id}', 'projects')->name('admin.sliders.projects_update');
+            Route::any('/feedbacks', 'feedbacks')->name('admin.sliders.feedbacks');
+            Route::any('/feedbacks/{id}', 'feedbacks')->name('admin.sliders.feedbacks_update');
+            Route::any('/partners', 'partners')->name('admin.sliders.partners');
+            Route::any('/partners/{id}', 'partners')->name('admin.sliders.partners_update');
         });
 });

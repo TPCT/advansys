@@ -77,6 +77,6 @@ class SliderSlide extends Model implements Auditable
     ];
 
     public array $translatedAttributes = [
-        'title', 'slide_url', 'image_id', 'second_title'
+        'title', 'slide_url', 'image_id', 'second_title', 'description'
     ];
 }

@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('slider_slides_lang', function (Blueprint $table) {
+            $table->string('description', 255)->nullable()->after('image_id');
+            $table->tinyInteger('rate')->nullable()->after('description');
         });
     }
 
@@ -21,7 +22,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
+        Schema::table('slider_slides_lang', function (Blueprint $table) {
             //
         });
     }

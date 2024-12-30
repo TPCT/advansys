@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('payable', function (Blueprint $table) {
-            $table->string('redeem_token')->nullable();
+        Schema::table('slider_slides', function (Blueprint $table) {
+            $table->tinyInteger('rate')->after('order')->default(0);
         });
     }
 
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('payable', function (Blueprint $table) {
+        Schema::table('slider_slides', function (Blueprint $table) {
             //
         });
     }
