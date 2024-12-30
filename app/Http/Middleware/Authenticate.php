@@ -13,10 +13,10 @@ class Authenticate extends Middleware
      * Get the path the user should be redirected to when they are not authenticated.
      */
 
-    public function handle($request, Closure $next, ...$guards)
-    {
-        if (auth()->check())
-            return $next($request);
-        return Responses::error([], 401, __("site.Unauthorized"));
+    public function handle($request, Closure $next, ...$guards){
+        if (\Auth::guard($guards[0])->guest())
+            return Responses::error([], 401, __("errors.unauthorized"));
+
+        return parent::handle($request, $next, ...$guards);
     }
 }
