@@ -58,6 +58,43 @@ use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
  * @method static \Staudenmeir\LaravelAdjacencyList\Eloquent\Builder|BlockFeature withRelationshipExpression($direction, callable $constraint, $initialDepth, $from = null, $maxDepth = null)
  * @method static \Staudenmeir\LaravelAdjacencyList\Eloquent\Builder|BlockFeature withTranslation(?string $locale = null)
  * @property int $admin_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \OwenIt\Auditing\Models\Audit> $audits
+ * @property-read int|null $audits_count
+ * @property-read \App\Models\Admin $author
+ * @property-read \App\Models\Block\Block $block
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $children
+ * @property-read int|null $children_count
+ * @property-read \Awcodes\Curator\Models\Media|null $cover_image
+ * @property-read \Awcodes\Curator\Models\Media|null $image
+ * @property-read \App\Models\Block\BlockFeature|null $parent
+ * @property-read \App\Models\Block\BlockFeatureLang|null $translation
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Block\BlockFeatureLang> $translations
+ * @property-read int|null $translations_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $ancestors The model's recursive parents.
+ * @property-read int|null $ancestors_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $ancestorsAndSelf The model's recursive parents and itself.
+ * @property-read int|null $ancestors_and_self_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $bloodline The model's ancestors, descendants and itself.
+ * @property-read int|null $bloodline_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $childrenAndSelf The model's direct children and itself.
+ * @property-read int|null $children_and_self_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $descendants The model's recursive children.
+ * @property-read int|null $descendants_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $descendantsAndSelf The model's recursive children and itself.
+ * @property-read int|null $descendants_and_self_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $parentAndSelf The model's direct parent and itself.
+ * @property-read int|null $parent_and_self_count
+ * @property-read \App\Models\Block\BlockFeature|null $rootAncestor The model's topmost parent.
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $siblings The parent's other children.
+ * @property-read int|null $siblings_count
+ * @property-read \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection|\App\Models\Block\BlockFeature[] $siblingsAndSelf All the parent's children.
+ * @property-read int|null $siblings_and_self_count
+ * @method static \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection<int, static> all($columns = ['*'])
+ * @method static \Staudenmeir\LaravelAdjacencyList\Eloquent\Collection<int, static> get($columns = ['*'])
+ * @method static \Staudenmeir\LaravelAdjacencyList\Eloquent\Builder|BlockFeature whereAdminId($value)
+ * @mixin \Eloquent
  */
 class BlockFeature extends Model implements \OwenIt\Auditing\Contracts\Auditable
 {

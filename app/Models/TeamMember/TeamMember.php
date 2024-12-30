@@ -2,8 +2,10 @@
 
 namespace App\Models\TeamMember;
 
+use App\Helpers\ApiResponse;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasStatus;
+use App\Helpers\HasTimestamps;
 use App\Helpers\WeightedModel;
 use App\Models\Dropdown\Dropdown;
 use Filament\Tables\Columns\Concerns\HasWeight;
@@ -53,11 +55,13 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|TeamMember whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TeamMember whereWeight($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TeamMember withTranslation(?string $locale = null)
+ * @property int $admin_id
+ * @method static \Illuminate\Database\Eloquent\Builder|TeamMember whereAdminId($value)
  * @mixin \Eloquent
  */
 class TeamMember extends WeightedModel implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use \App\Helpers\Translatable, HasAuthor, HasStatus, Auditable, \App\Helpers\HasTranslations, HasWeight;
+    use \App\Helpers\Translatable, HasAuthor, HasStatus, Auditable, \App\Helpers\HasTranslations, HasWeight, ApiResponse, HasTimestamps;
 
     public $translationModel = TeamMemberLang::class;
 

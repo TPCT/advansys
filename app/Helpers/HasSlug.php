@@ -22,7 +22,7 @@ trait HasSlug
                 return;
             $language = app(General::class)->default_locale;
             $slug = Utilities::slug($model->translate($language)->title);
-            $count = static::where('slug', 'like', '%' . $slug . '%')->count();
+            $count = static::withoutGlobalScopes(['active'])->where('slug', 'like', '%' . $slug . '%')->count();
             $model->slug = trim($slug . ($count ? "-" . ($count + 1) : ""), '-._?\\/');
         });
     }

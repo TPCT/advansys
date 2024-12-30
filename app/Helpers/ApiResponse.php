@@ -10,19 +10,10 @@ trait ApiResponse
         return ['created_at', 'deleted_at', 'updated_at', 'status', 'weight', 'order', 'pivot'];
     }
 
-    public function toArray(){
-        $this->refresh();
-        $api_hidden_attributes = $this->get_api_hidden_attributes();
-        $this->makeHidden($api_hidden_attributes);
-        $attributes = Parent::toArray();
-        if (request()->segment(2) !== 'api')
-            return $attributes;
-
-        $output = [];
-        $translated_attributes = $this->translatedAttributes ?? [];
-        $image_uploads = $this->upload_attributes ?? [];
-
+    private function filter_translated_attributes($attributes, $image_uploads, $translated_attributes, &$output, $remove_id=false){
         foreach ($attributes as $key => $value) {
+            if ($key == "id" && $remove_id)
+                continue;
             if (in_array($key, $image_uploads)) {
                 $output[explode('_', $key)[0]] = Media::find($value)?->url ?: null;
             }
@@ -38,6 +29,36 @@ trait ApiResponse
             if (in_array($key, $image_uploads)){
                 $output[explode('_', $key)[0]] = Media::find($output[$key])?->url;
                 unset($output[$key]);
+            }
+        }
+        return $output;
+    }
+    public function toArray(){
+        $this->refresh();
+        $api_hidden_attributes = $this->get_api_hidden_attributes();
+        $this->makeHidden($api_hidden_attributes);
+        $attributes = Parent::toArray();
+        if (request()->segment(2) !== 'api')
+            return $attributes;
+
+        $output = [];
+        $translated_attributes = $this->translatedAttributes ?? [];
+        $image_uploads = $this->upload_attributes ?? [];
+
+        $this->filter_translated_attributes($attributes, $image_uploads, $translated_attributes, $output);
+        foreach($output as $key => $value){
+            if (in_array($key, $translated_attributes) || in_array($key . "_id", $translated_attributes)) {
+                unset($output[$key]);
+            }
+        }
+
+        if ($this->translations) {
+            unset($attributes['translations']);
+            $output['translations'] = [];
+            foreach ($this->translations as $translation) {
+                $translation_output = [];
+                $this->filter_translated_attributes($translation->toArray(), $image_uploads, $translated_attributes, $translation_output, true);
+                $output['translations'][] = $translation_output;
             }
         }
         return $output;

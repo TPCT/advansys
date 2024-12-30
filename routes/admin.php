@@ -1,10 +1,16 @@
 <?php
 
 use App\Http\Controllers\admin\AuthController;
+use App\Http\Controllers\admin\FormsController;
 use App\Http\Controllers\admin\ProfileController;
+use App\Http\Controllers\admin\ServicesController;
 use App\Http\Controllers\admin\SettingsController;
 use App\Http\Controllers\admin\SlidersController;
+use App\Http\Controllers\admin\SubServicesController;
 use App\Http\Controllers\admin\TeamMembersController;
+use App\Http\Controllers\admin\BlogsController;
+use App\Http\Controllers\admin\TranslationCategoriesController;
+use App\Http\Controllers\admin\TranslationsController;
 
 Route::prefix('auth')
     ->controller(AuthController::class)
@@ -50,5 +56,62 @@ Route::middleware(['auth:admin'])->group(function () {
             Route::get('/{team_member}', 'show')->name('admin.team-members.show');
             Route::post('/{team_member}', 'update')->name('admin.team-members.update');
             Route::delete('/{team_member}', 'delete')->name('admin.team-members.delete');
+        });
+
+    Route::prefix('blogs')
+        ->controller(BlogsController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('admin.blogs.index');
+            Route::post('', 'create')->name('admin.blogs.create');
+            Route::get('/{blog}', 'show')->name('admin.blogs.show');
+            Route::post('/{blog}', 'update')->name('admin.blogs.update');
+            Route::delete('/{blog}', 'delete')->name('admin.blogs.delete');
+        });
+
+    Route::prefix('forms')
+        ->controller(FormsController::class)
+        ->group(function () {
+           Route::get('contact-us', 'contact_us')->name('admin.forms.contact_us');
+        });
+
+    Route::prefix('services')
+        ->controller(ServicesController::class)
+        ->group(function () {
+            Route::get('', 'index')->name('admin.services.index');
+            Route::post('', 'create')->name('admin.services.create');
+            Route::get('/{service}', 'show')->name('admin.services.show');
+            Route::post('/{service}', 'update')->name('admin.services.update');
+            Route::delete('/{service}', 'delete')->name('admin.services.delete');
+
+            Route::prefix('{service}/sub-services')
+                ->controller(SubServicesController::class)
+                ->group(function () {
+                    Route::get('', 'index')->name('admin.services.sub-services.index');
+                    Route::post('', 'create')->name('admin.services.sub-services.create');
+                    Route::post('/{sub_service}', 'update')->name('admin.services.sub-services.update');
+                    Route::delete('/{sub_service}', 'delete')->name('admin.services.sub-services.delete');
+                });
+        });
+
+    Route::prefix('translations')
+        ->group(function () {
+            Route::prefix('categories')
+                ->controller(TranslationCategoriesController::class)
+                ->group(function () {
+                    Route::get('', 'index')->name('admin.translations.categories.index');
+                    Route::post('', 'create')->name('admin.translations.categories.create');
+                    Route::post('/{category}', 'update')->name('admin.translations.categories.update');
+                    Route::delete('/{category}', 'delete')->name('admin.translations.categories.delete');
+                });
+
+            Route::prefix('categories')
+                ->controller(TranslationsController::class)
+                ->group(function () {
+                    Route::get('/{category}/translations', 'index')->name('admin.translations.categories.translations.index');
+                    Route::post('/{category}/translations', 'create')->name('admin.translations.categories.translations.create');
+                    Route::post('/{category}/translations/{translation}', 'update')->name('admin.translations.categories.translations.update');
+                    Route::delete('/{category}/translations/{translation}', 'delete')->name('admin.translations.categories.translations.delete');
+                });
+
         });
 });

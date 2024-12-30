@@ -4,10 +4,11 @@ namespace App\Http\Controllers\admin;
 
 use App\Helpers\Responses;
 use App\Http\Controllers\Controller;
-use App\Models\TeamMember\TeamMember;
+use App\Models\Service\Service;
 use Awcodes\Curator\Models\Media;
+use Illuminate\Http\Request;
 
-class TeamMembersController extends Controller
+class ServicesController extends Controller
 {
     private function localized_data($data){
         $localized_data = [];
@@ -45,23 +46,27 @@ class TeamMembersController extends Controller
         return $data;
     }
 
-    public function index(){
-        return Responses::success(TeamMember::all());
+    public function index()
+    {
+        return Responses::success(Service::with('sub_services')->get());
     }
 
-    public function show($locale, TeamMember $team_member){
-        return Responses::success($team_member);
+    public function show($locale, Service $service){
+        $service->load('sub_services');
+        return Responses::success($service);
     }
 
     public function create($locale){
         $validations = [
             'title' => 'required|array',
+            'second_title' => 'required|array',
             'description' => 'required|array',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
+            $validations['second_title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
         }
 
@@ -74,20 +79,22 @@ class TeamMembersController extends Controller
 
         $data = $this->image($data);
         $data = $this->localized_data($data);
-        $team_member = TeamMember::create($data);
-
-        return Responses::success($team_member);
+        $service = Service::create($data);
+        $service->load('sub_services');
+        return Responses::success($service);
     }
 
-    public function update($locale, TeamMember $team_member){
+    public function update($locale, Service $service){
         $validations = [
             'title' => 'required|array',
+            'second_title' => 'required|array',
             'description' => 'required|array',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
+            $validations['second_title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
         }
 
@@ -100,13 +107,14 @@ class TeamMembersController extends Controller
 
         $data = $this->image($data);
         $data = $this->localized_data($data);
-        $team_member->update($data);
+        $service->update($data);
+        $service->load('sub_services');
 
-        return Responses::success($team_member);
+        return Responses::success($service);
     }
 
-    public function delete($locale, TeamMember $team_member){
-        $team_member->delete();
-        return Responses::success([], 200, "site.Team member deleted successfully");
+    public function delete($locale, Service $service){
+        $service->delete();
+        return Responses::success([], 200, "site.Service deleted successfully");
     }
 }

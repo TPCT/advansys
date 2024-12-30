@@ -2,6 +2,7 @@
 
 namespace App\Models\News;
 
+use App\Helpers\ApiResponse;
 use App\Helpers\HasAuthor;
 use App\Helpers\HasMedia;
 use App\Helpers\HasSlug;
@@ -73,7 +74,7 @@ use Spatie\Searchable\SearchResult;
  */
 class News extends WeightedModel implements \OwenIt\Auditing\Contracts\Auditable, Searchable
 {
-    use \App\Helpers\HasTranslations, HasMedia, HasAuthor, HasStatus, \OwenIt\Auditing\Auditable, HasSlug, HasTimestamps, \App\Helpers\Translatable;
+    use \App\Helpers\HasTranslations, HasMedia, HasAuthor, HasStatus, \OwenIt\Auditing\Auditable, HasSlug, HasTimestamps, \App\Helpers\Translatable, ApiResponse;
 
     public $translationModel = NewsLang::class;
 
@@ -99,9 +100,4 @@ class News extends WeightedModel implements \OwenIt\Auditing\Contracts\Auditable
             $url
         );
     }
-
-    public function images(){
-        return $this->belongsToMany(Media::class, 'news_images', 'parent_id', 'image_id');
-    }
-
 }
