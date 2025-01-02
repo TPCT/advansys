@@ -17,8 +17,12 @@ class SlidersController extends Controller
         return Responses::success([], 200, __("site.Slide Deleted Successfully"));
     }
 
-    private function show($category){
+    private function show($category, $id=null){
         $slider = Slider::whereCategory($category)->with('slides')->first();
+        if ($id) {
+            $slide = $slider->slides()->findOrFail($id);
+            return Responses::success($slide);
+        }
         return Responses::success($slider);
     }
 
@@ -76,7 +80,7 @@ class SlidersController extends Controller
     public function hero($locale, $id=null){
 
         if (request()->method() == 'GET')
-           return $this->show(Slider::HOMEPAGE_HERO_SLIDER);
+           return $this->show(Slider::HOMEPAGE_HERO_SLIDER, $id);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -115,7 +119,7 @@ class SlidersController extends Controller
     }
     public function projects($locale, $id=null){
         if (request()->method() == 'GET')
-            return $this->show(Slider::HOMEPAGE_PROJECTS_SLIDER);
+            return $this->show(Slider::HOMEPAGE_PROJECTS_SLIDER, $id);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -152,7 +156,7 @@ class SlidersController extends Controller
 
     public function feedbacks($locale, $id=null){
         if (request()->method() == 'GET')
-            return $this->show(Slider::HOMEPAGE_FEEDBACK_SLIDER);
+            return $this->show(Slider::HOMEPAGE_FEEDBACK_SLIDER, $id);
 
         if (request()->method() == 'POST'){
             $validations = [
@@ -192,7 +196,7 @@ class SlidersController extends Controller
 
     public function partners($locale, $id=null){
         if (request()->method() == 'GET')
-            return $this->show(Slider::HOMEPAGE_PARTNERS_SLIDER);
+            return $this->show(Slider::HOMEPAGE_PARTNERS_SLIDER, $id);
 
         if (request()->method() == 'POST'){
             $validations = [

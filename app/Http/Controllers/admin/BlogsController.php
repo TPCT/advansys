@@ -54,13 +54,8 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        $blogs = News::paginate(10)->withQueryString();
-        return Responses::success([
-            'current_page' => $blogs->currentPage(),
-            'per_page' => $blogs->perPage(),
-            'total' => $blogs->total(),
-            'blogs' => $blogs->getCollection()
-        ]);
+        $blogs = News::all();
+        return Responses::success($blogs);
     }
 
 
@@ -77,7 +72,7 @@ class BlogsController extends Controller
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
-            $validations['content.' . $locale] = 'required|string|max:255';
+            $validations['content.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));
@@ -115,7 +110,7 @@ class BlogsController extends Controller
         foreach (config('app.locales') as $locale => $language) {
             $validations['title.' . $locale] = 'required|string|max:255';
             $validations['description.' . $locale] = 'required|string|max:255';
-            $validations['content.' . $locale] = 'required|string|max:255';
+            $validations['content.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));

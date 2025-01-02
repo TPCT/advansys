@@ -4,6 +4,7 @@ namespace App\Http;
 
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Http\Middleware\HandleCors;
 use Kenepa\TranslationManager\Http\Middleware\SetLanguage;
 
 class Kernel extends HttpKernel
@@ -27,6 +28,7 @@ class Kernel extends HttpKernel
         \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        HandleCors::class
     ];
 
     /**

@@ -50,7 +50,12 @@ class FrontendController extends Controller
     }
 
     public function blog($locale, News $blog){
-        return Responses::success($blog);
+        $recent_blogs = News::where('id', '!=', $blog->id)->take(3)->get();
+        return Responses::success([
+            'blog' => $blog,
+            'author' => $blog->author,
+            'recent_blogs' => $recent_blogs,
+        ]);
     }
 
     public function service($locale, Service $service){

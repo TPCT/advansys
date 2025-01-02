@@ -46,31 +46,25 @@ trait ApiResponse
         $image_uploads = $this->upload_attributes ?? [];
 
         $this->filter_translated_attributes($attributes, $image_uploads, $translated_attributes, $output);
-        foreach($output as $key => $value){
-            if (in_array($key, $translated_attributes) || in_array($key . "_id", $translated_attributes)) {
-                unset($output[$key]);
-            }
-        }
-
-        if ($this->translations) {
-            unset($attributes['translations']);
-            $output['translations'] = [];
-            $unified_output = [];
-            foreach ($this->translations as $translation) {
-                $translation_output = [];
-                $this->filter_translated_attributes($translation->toArray(), $image_uploads, $translated_attributes, $translation_output, true);
-                $output['translations'][] = $translation_output;
-            }
-            foreach ($output['translations'] as $translation) {
-                foreach ($translation as $key => $value) {
-                    if ($key == "language")
-                        continue;
-                    $unified_output[$key. "_" . $translation['language']] = $value;
+        if (request()->segment(3) === 'admin'){
+            foreach($output as $key => $value){
+                if (in_array($key, $translated_attributes) || in_array($key . "_id", $translated_attributes)) {
+                    unset($output[$key]);
                 }
             }
-            unset($output['translations']);
-            $output = array_merge($output, $unified_output);
+
+            if ($this->translations) {
+                unset($attributes['translations']);
+                foreach ($this->translations->toArray() as $translation) {
+                    foreach ($translation as $key => $value) {
+                        if (!in_array($key, $translated_attributes))
+                            continue;
+                        $output[$key. "_" . $translation['language']] = $value;
+                    }
+                }
+            }
         }
+        unset($output['translations']);
         return $output;
     }
 }
