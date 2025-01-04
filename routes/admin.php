@@ -75,7 +75,7 @@ Route::middleware(['auth:admin'])->group(function () {
         ->controller(FormsController::class)
         ->group(function () {
            Route::get('contact-us', 'contact_us')->name('admin.forms.contact_us');
-           Route::get('newsletter', 'newsletter')->name('admin.forms.newsletter');
+           Route::get('newsletters', 'newsletter')->name('admin.forms.newsletters');
         });
 
     Route::prefix('services')

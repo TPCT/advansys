@@ -19,6 +19,6 @@ use OwenIt\Auditing\Auditable;
 class Newsletter extends Model implements \OwenIt\Auditing\Contracts\Auditable
 {
     use Auditable;
-
+    protected $table = 'newsletter';
     protected $guarded = ['id', 'created_at', 'updated_at'];
 }

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('newsletter', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\News\News::class)->constrained()->cascadeOnDelete();
             $table->string('email')->nullable();
             $table->timestamps();
         });
