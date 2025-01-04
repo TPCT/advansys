@@ -20,10 +20,13 @@ class SettingsController extends Controller
             'about_us_image' => Media::find(app(Site::class)->about_us_image)?->url,
             'email' => app(Site::class)->email,
             'phone' => app(Site::class)->phone,
-            'footer_description' => app(Site::class)->footer_description,
-            'address' => app(Site::class)->address,
             'number_of_projects' => app(Site::class)->number_of_projects,
             'number_of_years' => app(Site::class)->number_of_years,
+        ];
+
+        $translatable = [
+            'footer_description' => app(Site::class)->footer_description,
+            'address' => app(Site::class)->address,
             'who_we_are_title' => app(Site::class)->who_we_are_title,
             'who_we_are_description' => app(Site::class)->who_we_are_description,
             'tab_1_title' => app(Site::class)->tab_1_title,
@@ -42,6 +45,17 @@ class SettingsController extends Controller
                     $settings[$key . "_" . $locale] = $data;
                 }
                 unset($settings[$key]);
+            }
+        }
+
+        foreach($translatable as $key => $value){
+            if (is_null($value)){
+                foreach(config('app.locales') as $locale => $language)
+                    $settings[$key . "_" . $locale] = $value;
+            }elseif (is_array($value)){
+                foreach ($value as $locale => $data) {
+                    $settings[$key . "_" . $locale] = $data;
+                }
             }
         }
         return Responses::success($settings);

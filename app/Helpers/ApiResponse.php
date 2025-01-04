@@ -44,11 +44,13 @@ trait ApiResponse
         $output = [];
         $translated_attributes = $this->translatedAttributes ?? [];
         $image_uploads = $this->upload_attributes ?? [];
-
         $this->filter_translated_attributes($attributes, $image_uploads, $translated_attributes, $output);
         if (request()->segment(3) === 'admin'){
             foreach($output as $key => $value){
-                if (in_array($key, $translated_attributes) || in_array($key . "_id", $translated_attributes)) {
+                if (in_array($key, $translated_attributes)) {
+                    unset($output[$key]);
+                }elseif (in_array($key, $image_uploads)) {
+                    $output[explode('_', $key)[0]] = Media::find($value)?->url;
                     unset($output[$key]);
                 }
             }
@@ -57,7 +59,7 @@ trait ApiResponse
                 unset($attributes['translations']);
                 foreach ($this->translations->toArray() as $translation) {
                     foreach ($translation as $key => $value) {
-                        if (!in_array($key, $translated_attributes))
+                        if (in_array($key, array_merge($image_uploads, $api_hidden_attributes, ['id', 'parent_id', 'language'])))
                             continue;
                         $output[$key. "_" . $translation['language']] = $value;
                     }
