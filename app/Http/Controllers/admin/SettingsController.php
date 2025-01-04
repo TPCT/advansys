@@ -41,9 +41,8 @@ class SettingsController extends Controller
 
         foreach ($settings as $key => $value) {
             if (is_array($value)) {
-                foreach ($value as $locale => $data) {
-                    $settings[$key . "_" . $locale] = $data;
-                }
+                foreach (config('app.locales') as $locale => $language)
+                    $settings[$key . "_" . $locale] = $value[$locale] ?? null;
                 unset($settings[$key]);
             }
         }
@@ -53,9 +52,8 @@ class SettingsController extends Controller
                 foreach(config('app.locales') as $locale => $language)
                     $settings[$key . "_" . $locale] = $value;
             }elseif (is_array($value)){
-                foreach ($value as $locale => $data) {
-                    $settings[$key . "_" . $locale] = $data;
-                }
+                foreach (config('app.locales') as $locale => $language)
+                    $settings[$key . "_" . $locale] = $value[$locale] ?? null;
             }
         }
         return Responses::success($settings);
