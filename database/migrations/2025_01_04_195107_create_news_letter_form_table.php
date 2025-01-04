@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('news_letter_form', function (Blueprint $table) {
+        Schema::create('newsletter', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\News\News::class)->constrained()->cascadeOnDelete();
             $table->string('email')->nullable();
             $table->timestamps();
         });
@@ -23,6 +24,5 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('news_letter_form');
     }
 };
