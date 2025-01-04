@@ -50,6 +50,8 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|SliderSlideLang whereVideoId($value)
  * @property string|null $slide_url
  * @method static \Illuminate\Database\Eloquent\Builder|SliderSlideLang whereSlideUrl($value)
+ * @property string|null $description_2
+ * @method static \Illuminate\Database\Eloquent\Builder|SliderSlideLang whereDescription2($value)
  * @mixin \Eloquent
  */
 class SliderSlideLang extends Model implements Auditable

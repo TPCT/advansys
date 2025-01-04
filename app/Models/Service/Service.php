@@ -54,6 +54,7 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|Service withTranslation(?string $locale = null)
  * @property string $slug
  * @method static \Illuminate\Database\Eloquent\Builder|Service whereSlug($value)
+ * @property-read \Awcodes\Curator\Models\Media|null $icon
  * @mixin \Eloquent
  */
 class Service extends Model implements \OwenIt\Auditing\Contracts\Auditable

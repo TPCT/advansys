@@ -53,6 +53,9 @@ use OwenIt\Auditing\Auditable;
  * @method static \Illuminate\Database\Eloquent\Builder|SubService whereTranslation(string $translationField, $value, ?string $locale = null, string $method = 'whereHas', string $operator = '=')
  * @method static \Illuminate\Database\Eloquent\Builder|SubService whereTranslationLike(string $translationField, $value, ?string $locale = null)
  * @method static \Illuminate\Database\Eloquent\Builder|SubService withTranslation(?string $locale = null)
+ * @property int|null $icon_id
+ * @property-read \Awcodes\Curator\Models\Media|null $icon
+ * @method static \Illuminate\Database\Eloquent\Builder|SubService whereIconId($value)
  * @mixin \Eloquent
  */
 class SubService extends Model implements \OwenIt\Auditing\Contracts\Auditable

@@ -70,6 +70,7 @@ use Spatie\Searchable\SearchResult;
  * @property int $admin_id
  * @method static \Illuminate\Database\Eloquent\Builder|News whereAdminId($value)
  * @property-read Media|null $cover_image
+ * @property-read Media|null $icon
  * @mixin \Eloquent
  */
 class News extends WeightedModel implements \OwenIt\Auditing\Contracts\Auditable, Searchable

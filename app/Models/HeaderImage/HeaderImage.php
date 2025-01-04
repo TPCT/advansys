@@ -51,6 +51,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int $admin_id
  * @method static \Illuminate\Database\Eloquent\Builder|HeaderImage whereAdminId($value)
  * @property-read \Awcodes\Curator\Models\Media|null $cover_image
+ * @property-read \Awcodes\Curator\Models\Media|null $icon
  * @mixin \Eloquent
  */
 class HeaderImage extends Model implements Auditable

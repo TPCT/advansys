@@ -6,6 +6,7 @@ use App\Helpers\Responses;
 use App\Http\Controllers\Controller;
 use App\Models\ContactUs;
 use App\Models\News\News;
+use App\Models\Newsletter;
 use App\Models\OurValue\OurValue;
 use App\Models\Service\Service;
 use App\Models\Slider\Slider;
@@ -88,6 +89,22 @@ class FrontendController extends Controller
 
         ContactUs::create($data);
         return Responses::success([], 200, __("site.Contact Us Submit Successfully"));
+    }
+
+    public function newsletter(){
+        $validations = [
+            'email' => 'required|email',
+        ];
+
+        $data = request()->only(array_keys($validations));
+        $validator = \Validator::make($data, $validations);
+
+        if ($validator->fails())
+            return Responses::error([], 422, implode(", ", array_values($validator->errors()->all(''))));
+
+        $data['blog_id'] = request()->blog_id;
+        Newsletter::create($data);
+        return Responses::success([], 200, __("site.NewsLetter Submit Successfully"));
     }
 
     public function about_us(){

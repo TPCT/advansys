@@ -41,6 +41,7 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property int $admin_id
  * @method static \Illuminate\Database\Eloquent\Builder|Language whereAdminId($value)
  * @property-read \Awcodes\Curator\Models\Media|null $cover_image
+ * @property-read \Awcodes\Curator\Models\Media|null $icon
  * @mixin \Eloquent
  */
 class Language extends Model implements Auditable
