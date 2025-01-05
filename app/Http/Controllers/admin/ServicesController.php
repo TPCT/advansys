@@ -64,9 +64,9 @@ class ServicesController extends Controller
         ];
 
         foreach (config('app.locales') as $locale => $language) {
-            $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['second_title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
+            $validations['title.' . $locale] = 'required|string';
+            $validations['second_title.' . $locale] = 'required|string';
+            $validations['description.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));
@@ -92,9 +92,9 @@ class ServicesController extends Controller
         ];
 
         foreach (config('app.locales') as $locale => $language) {
-            $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['second_title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
+            $validations['title.' . $locale] = 'required|string';
+            $validations['second_title.' . $locale] = 'required|string';
+            $validations['description.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));

@@ -83,13 +83,13 @@ class SubServicesController extends Controller
         ];
 
         foreach (config('app.locales') as $locale => $language) {
-            $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['second_title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
-            $validations['key_features.' . $locale] = 'required|string|max:255';
-            $validations['use_cases.' . $locale] = 'required|string|max:255';
-            $validations['benefits.' . $locale] = 'required|string|max:255';
-            $validations['why_us.' . $locale] = 'required|string|max:255';
+            $validations['title.' . $locale] = 'required|string';
+            $validations['second_title.' . $locale] = 'required|string';
+            $validations['description.' . $locale] = 'required|string';
+            $validations['key_features.' . $locale] = 'required|string';
+            $validations['use_cases.' . $locale] = 'required|string';
+            $validations['benefits.' . $locale] = 'required|string';
+            $validations['why_us.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));
@@ -122,13 +122,13 @@ class SubServicesController extends Controller
         ];
 
         foreach (config('app.locales') as $locale => $language) {
-            $validations['title.' . $locale] = 'required|string|max:255';
-            $validations['second_title.' . $locale] = 'required|string|max:255';
-            $validations['description.' . $locale] = 'required|string|max:255';
-            $validations['key_features.' . $locale] = 'required|string|max:255';
-            $validations['use_cases.' . $locale] = 'required|string|max:255';
-            $validations['benefits.' . $locale] = 'required|string|max:255';
-            $validations['why_us.' . $locale] = 'required|string|max:255';
+            $validations['title.' . $locale] = 'required|string';
+            $validations['second_title.' . $locale] = 'required|string';
+            $validations['description.' . $locale] = 'required|string';
+            $validations['key_features.' . $locale] = 'required|string';
+            $validations['use_cases.' . $locale] = 'required|string';
+            $validations['benefits.' . $locale] = 'required|string';
+            $validations['why_us.' . $locale] = 'required|string';
         }
 
         $data = request()->only(array_keys($validations));
