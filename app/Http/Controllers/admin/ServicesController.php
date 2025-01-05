@@ -42,6 +42,24 @@ class ServicesController extends Controller
             ])->id;
             unset($data['image']);
         }
+
+        if (request()->hasFile('icon')) {
+            $image = $data['icon'];
+            $filename = \Str::uuid() . '.' . $image->extension();
+            request()->file('icon')->storePubliclyAs('public/media', $filename);
+            $data['icon_id'] = Media::create([
+                'disk' => 'public',
+                'directory' => 'media',
+                'visibility' => 'public',
+                'name' => $filename,
+                'path' => 'media/' . $filename,
+                'size' => $image->getSize(),
+                'type' => $image->getMimeType(),
+                'ext' => $image->getClientOriginalExtension(),
+                'title' => $image->getClientOriginalName(),
+            ])->id;
+            unset($data['icon']);
+        }
         return $data;
     }
 
@@ -61,6 +79,7 @@ class ServicesController extends Controller
             'second_title' => 'required|array',
             'description' => 'required|array',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
@@ -89,6 +108,7 @@ class ServicesController extends Controller
             'second_title' => 'required|array',
             'description' => 'required|array',
             'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'icon' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
 
         foreach (config('app.locales') as $locale => $language) {
