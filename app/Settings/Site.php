@@ -18,7 +18,8 @@ class Site extends Settings
     ];
 
     private array $uploads = [
-        'fav_icon', 'logo', 'footer_logo', 'contact_us_cover_image',
+        'fav_icon', 'logo', 'footer_logo',
+        'contact_us_cover_image',
         'about_us_cover_image', 'about_us_image'
     ];
 
@@ -56,6 +57,7 @@ class Site extends Settings
 
     public ?array $footer_logo;
     public ?array $address;
+    public ?string $location;
     public ?array $footer_description;
 
     public static function group(): string

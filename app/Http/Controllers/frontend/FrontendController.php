@@ -145,6 +145,12 @@ class FrontendController extends Controller
             'about_us_description' => app(Site::class)->translate('about_us_description'),
             'vision_description' => app(Site::class)->translate('vision_description'),
             'mission_description' => app(Site::class)->translate('mission_description'),
+            'services' => Service::translated()->get()->transform(function($service){
+                return [
+                    'title' => $service->title,
+                    'slug' => $service->slug,
+                ];
+            }),
         ];
 
         $settings['gallery'] = Media::latest()->take(6)->get()->transform(function($item){

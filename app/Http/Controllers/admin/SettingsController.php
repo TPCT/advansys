@@ -22,6 +22,7 @@ class SettingsController extends Controller
             'phone' => app(Site::class)->phone,
             'number_of_projects' => app(Site::class)->number_of_projects,
             'number_of_years' => app(Site::class)->number_of_years,
+            'location' => app(Site::class)->location
         ];
 
         $translatable = [
@@ -78,10 +79,12 @@ class SettingsController extends Controller
             'tab_1_title' => 'sometimes|array',
             'tab_1_description' => 'sometimes|array',
             'tab_2_title' => 'sometimes|array',
+            'tab_2_description' => 'sometimes|array',
             'about_us_title' => 'sometimes|array',
             'about_us_description' => 'sometimes|array',
             'vision_description' => 'sometimes|array',
             'mission_description' => 'sometimes|array',
+            'location' => 'sometimes|nullable|max:255'
         ];
 
         $data = request()->only(array_keys($keys));
